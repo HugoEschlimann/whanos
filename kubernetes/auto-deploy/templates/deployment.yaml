@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "auto-deploy.fullname" . }}
+  labels:
+    {{- include "auto-deploy.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.deployment.replicas }}
+  selector:
+    matchLabels:
+      app: {{ include "auto-deploy.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "auto-deploy.name" . }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          resources:
+            {{- toYaml .Values.deployment.resources | nindent 12 }}
+          ports:
+            {{- range .Values.deployment.ports }}
+            - containerPort: {{ . }}
+            {{- end }}

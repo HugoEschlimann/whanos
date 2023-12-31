@@ -1,0 +1,18 @@
+image:
+  repository: busybox
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  port: 3000
+  type: LoadBalancer
+
+deployment:
+  replicas: 1
+  resources:
+    limits:
+      memory: "128M"
+    requests:
+      memory: "64M"
+  ports:
+    - 3000

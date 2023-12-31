@@ -1,0 +1,6 @@
+jobs:
+  - file: "/usr/share/jenkins/ref/jobs/job_dsl.groovy"
+
+security:
+  globalJobDslSecurityConfiguration:
+    useScriptSecurity: false

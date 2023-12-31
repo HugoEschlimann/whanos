@@ -1,0 +1,13 @@
+FROM gcc:13.2
+
+SHELL ["/bin/bash", "-c"]
+
+ONBUILD COPY . /app
+
+ONBUILD WORKDIR /app
+
+ONBUILD RUN apt update && apt install make -y
+
+ONBUILD RUN make && make clean && rm -rf Makefile app/
+
+ONBUILD CMD ["./compiled-app"]

@@ -1,0 +1,14 @@
+FROM maven:3.8.4-openjdk-11
+
+SHELL ["/bin/bash", "-c"]
+
+ONBUILD COPY . /app
+
+ONBUILD WORKDIR /app
+
+ONBUILD RUN mvn dependency:resolve -f app/pom.xml \
+    && mvn package -f app/pom.xml \
+    && cp app/target/app.jar . \
+    && rm -rf app/
+
+ONBUILD CMD ["java", "-jar", "app.jar"]

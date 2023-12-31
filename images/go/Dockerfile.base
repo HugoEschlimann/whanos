@@ -1,0 +1,11 @@
+FROM golang:latest
+
+SHELL ["/bin/bash", "-c"]
+
+ONBUILD COPY . /app
+
+ONBUILD WORKDIR /app
+
+ONBUILD RUN go build app/*.go
+
+ONBUILD CMD ["./app/main"]

@@ -1,0 +1,11 @@
+FROM rust:1.74
+
+SHELL ["/bin/bash", "-c"]
+
+ONBUILD COPY . /app
+
+ONBUILD WORKDIR /app
+
+ONBUILD RUN cargo build --release
+
+ONBUILD CMD ["./target/release/app"]

@@ -1,0 +1,25 @@
+# syntax=docker/dockerfile:1
+# Build stage
+FROM maven:3.8.4-openjdk-11 as build
+
+SHELL ["/bin/bash", "-c"]
+
+WORKDIR /app
+
+COPY . /app
+
+RUN mvn dependency:resolve -f app/pom.xml \
+    && mvn package -f app/pom.xml \
+    && cp app/target/app.jar . \
+    && rm -rf app/
+
+# Production stage
+FROM openjdk:11-jre-slim
+
+SHELL ["/bin/bash", "-c"]
+
+WORKDIR /app
+
+COPY --from=build /app/app.jar .
+
+CMD ["java", "-jar", "app.jar"]

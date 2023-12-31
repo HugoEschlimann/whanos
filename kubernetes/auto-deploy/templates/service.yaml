@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "auto-deploy.fullname" . }}
+  labels:
+    {{- include "auto-deploy.labels" . | nindent 4 }}
+spec:
+  type: {{.Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "auto-deploy.selectorLabels" . | nindent 4 }}

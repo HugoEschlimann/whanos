@@ -1,0 +1,13 @@
+FROM node:20.9 as whanos-javascript
+
+SHELL ["/bin/bash", "-c"]
+
+WORKDIR /app
+
+COPY package.json .
+
+COPY ./app ./app
+
+RUN npm install
+
+CMD ["node", "."]

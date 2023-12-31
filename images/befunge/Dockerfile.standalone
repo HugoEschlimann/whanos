@@ -1,0 +1,13 @@
+FROM node:14 as whanos-befunge
+
+SHELL ["/bin/bash", "-c"]
+
+RUN npm install befunge93
+
+RUN curl -L https://gist.githubusercontent.com/Thorf1nn/e04655a186a16bab5f4f04203756c78c/raw/b680e42061b9246c213f43c2b6b85a16487b92a4/interpretor.js > /tmp/interpretor.js
+
+COPY . /app
+
+WORKDIR /app
+
+CMD ["node", "/tmp/interpretor.js", "app/"]

@@ -1,0 +1,11 @@
+FROM node:20.9
+
+SHELL ["/bin/bash", "-c"]
+
+ONBUILD COPY . /app
+
+ONBUILD WORKDIR /app
+
+ONBUILD RUN npm install
+
+ONBUILD CMD ["node", "."]
